@@ -3,6 +3,8 @@ class CreateLinks < ActiveRecord::Migration[6.0]
     create_table :links do |t|
       t.string :url
       t.integer :clicked, default: 0
+      t.string :title
+      t.string :description
 
       t.timestamps
     end

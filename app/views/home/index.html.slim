@@ -1,1 +1,8 @@
-p Index
+h1
+  | GIZ! Go
+p No more link to any broken links.
+ul
+- Link.all.each do |link|
+  li
+    a href="/#{link.url}"
+      = link.url

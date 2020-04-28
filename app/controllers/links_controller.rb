@@ -1,12 +1,18 @@
 class LinksController < ApplicationController
   def show
     @url = params[:url]
+
     if params[:url] && params[:url].include?('http')
       @url = params[:url].gsub(":/","://")
+      @link =  Link.find_by_url(@url)
+      @link = if @link
+        @link
+      else
+        page = MetaInspector.new(@url)
+        Link.create(url: @url, title: page.title, description: page.description)
+      end
     end
   end
-
-
 
   # def show_by_slug
   #   @link = Link.find_by_slug(params[:slug]) if params[:slug].present?

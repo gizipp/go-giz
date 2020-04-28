@@ -1,3 +1,8 @@
-<p>
-  <%= @url %>
-</p>
+h2
+  | Link seems okay.
+h3
+  = @link.title
+p
+  = @link.description
+a href="#{@link.url}"
+  | Go to Link
