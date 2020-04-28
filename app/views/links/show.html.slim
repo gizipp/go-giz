@@ -6,3 +6,26 @@ p
   = @link.description
 a href="#{@link.url}"
   | Go to Link
+
+h3
+  = "Redirecting to #{@link.url} after "
+  span#countdown 10
+  = " seconds"
+
+javascript:
+  var seconds = 10;
+
+  function countdown() {
+      seconds = seconds - 1;
+      if (seconds < 0) {
+          // Chnage your redirection link here
+          window.location = "#{@link.url}";
+      } else {
+          // Update remaining seconds
+          document.getElementById("countdown").innerHTML = seconds;
+          // Count down using javascript
+          window.setTimeout("countdown()", 1000);
+      }
+    }
+
+    countdown();
