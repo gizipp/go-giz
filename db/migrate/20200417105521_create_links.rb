@@ -5,6 +5,7 @@ class CreateLinks < ActiveRecord::Migration[6.0]
       t.integer :clicked, default: 0
       t.string :title
       t.string :description
+      t.text :raw
 
       t.timestamps
     end

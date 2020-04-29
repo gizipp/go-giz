@@ -4,6 +4,7 @@ class CreateSlugs < ActiveRecord::Migration[6.0]
       t.integer :link_id
       t.string :path
       t.integer :clicked, default: 0
+      t.boolean :primary, default: true
 
       t.timestamps
     end

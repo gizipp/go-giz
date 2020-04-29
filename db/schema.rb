@@ -28,6 +28,7 @@ ActiveRecord::Schema.define(version: 2020_04_22_143413) do
     t.integer "clicked", default: 0
     t.string "title"
     t.string "description"
+    t.text "raw"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
@@ -36,6 +37,7 @@ ActiveRecord::Schema.define(version: 2020_04_22_143413) do
     t.integer "link_id"
     t.string "path"
     t.integer "clicked", default: 0
+    t.boolean "primary", default: true
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["link_id"], name: "index_slugs_on_link_id"
