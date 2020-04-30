@@ -1,4 +1,10 @@
 Rails.application.routes.draw do
+  namespace :admin do
+      resources :slugs
+      resources :links
+
+      root to: "slugs#index"
+    end
   root 'home#index', format: false
   get '/about', to: 'home#about'
   get '/*url', to: 'links#show', format: false
