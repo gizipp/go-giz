@@ -1,40 +1,22 @@
 class LinksController < ApplicationController
-  def show
-    @url = params[:url]
+  before_action :set_url_or_slug
+  before_action :set_link
 
-    if params[:url]
-      @url = params[:url].gsub(":/","://") if params[:url].include?('http')
-      @link = Link.find_by_url(@url) || Link.find_by_slug(params[:url])
-      @link = if @link
-        @link
-      else
-        page = MetaInspector.new(@url)
-        Link.create(url: @url, title: page.title, description: page.description, raw: page.meta_tags.as_json)
-      end
+  def show;end
+
+  private
+
+  def set_url_or_slug
+    @url_or_slug = if params[:url].include?('http')
+      params[:url].gsub(":/","://")
+    else
+      params[:url]
     end
   end
 
-  # def show_by_slug
-  #   @link = Link.find_by_slug(params[:slug]) if params[:slug].present?
-  #
-  #   if @link && @link.update_attribute(:slug_clicked, @link.slug_clicked + 1)
-  #     return redirect_to @link.url
-  #   end
-  #
-  #   render 'errors/404', status: 404
-  # end
-  #
-  # def show
-  #   if params[:url] && params[:url].include?('http')
-  #     url = params[:url].gsub(":/","://")
-  #     @link = Link.find_by_url(url) || Link.shorten(url)
-  #     @link.update_attribute(:url_clicked, @link.url_clicked + 1)
-  #     return redirect_to @link.url
-  #   end
-  #
-  #   render 'errors/404', status: 404
-  # end
-  #
-  # def index
-  # end
+  def set_link
+    @link = Link.find_by_url(@url_or_slug) ||
+            Link.find_by_slug(@url_or_slug) ||
+            Link.crawl_and_create(@url_or_slug)
+  end
 end

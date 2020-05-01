@@ -10,37 +10,29 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_04_22_143413) do
+ActiveRecord::Schema.define(version: 2020_04_17_105521) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "admin_users", force: :cascade do |t|
-    t.string "email", default: "", null: false
-    t.string "encrypted_password", default: "", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["email"], name: "index_admin_users_on_email", unique: true
-  end
-
   create_table "links", force: :cascade do |t|
     t.string "url"
-    t.integer "clicked", default: 0
+    t.integer "url_clicked", default: 0
+    t.string "slug"
+    t.integer "slug_clicked", default: 0
     t.string "title"
     t.string "description"
-    t.text "raw"
+    t.string "author"
+    t.string "image"
+    t.string "status_code", limit: 3, default: "404"
+    t.string "scheme"
+    t.string "host"
+    t.datetime "checked_at"
+    t.jsonb "custom_data"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-  end
-
-  create_table "slugs", force: :cascade do |t|
-    t.integer "link_id"
-    t.string "path"
-    t.integer "clicked", default: 0
-    t.boolean "primary", default: true
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["link_id"], name: "index_slugs_on_link_id"
+    t.index ["slug"], name: "index_links_on_slug", unique: true
+    t.index ["url"], name: "index_links_on_url", unique: true
   end
 
 end
