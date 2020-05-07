@@ -21,7 +21,7 @@ class Link < ApplicationRecord
     rescue MetaInspector::TimeoutError, MetaInspector::RequestError
       nil
     else
-      Link.create!(
+      Link.create(
         url: url,
         title: page.best_title,
         description: page.best_description,
@@ -36,6 +36,22 @@ class Link < ApplicationRecord
           raw_meta: page.meta
         }
       )
+    end
+  end
+
+  def root_url
+    "#{scheme}://#{host}"
+  end
+
+  def root_url?
+    root_url == url
+  end
+
+  def title_excerpt
+    if title.length > 30
+      "#{title[0..30]}..."
+    else
+      title
     end
   end
 
