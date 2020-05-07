@@ -20,6 +20,6 @@ class LinksController < ApplicationController
             Link.crawl_and_create(@url_or_slug)
 
     @links = Link.where(host: [@url_or_slug, @link.host])
-                 .where.not(id: @link.id)
+                 .where.not(id: @link.id) if @link
   end
 end

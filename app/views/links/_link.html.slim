@@ -1,0 +1,67 @@
+h2
+  = @link.title
+
+hr
+ol[vocab="https://schema.org" typeof="BreadcrumbList"]
+  li[property="itemListElement" typeof="ListItem"]
+    a[property="item" typeof="WebPage" href="/"]
+      span[property="name"]
+        | Home
+    span[property="position" content="1" style="margin: 0 5px;"]
+      | >
+  li[property="itemListElement" typeof="ListItem"]
+    a[property="item" typeof="WebPage" href="/#{@link.root_url}"]
+      span[property="name"]
+        = @link.host
+    - if !@link.root_url?
+      span[property="position" content="2" style="margin: 0 5px;"]
+        | >
+  - if !@link.root_url?
+    li[property="itemListElement" typeof="ListItem"]
+      a[property="item" typeof="WebPage" href="/#{@link.url}"]
+        span[property="name"]
+          = @link.title_excerpt
+        span[property="position" content="3" style="margin: 0 5px;"]
+hr
+
+p
+  b
+    = "Link seems okay. Redirecting to #{@link.url[0..40]}.. after "
+    span#countdown 60
+    = " seconds, or "
+    a href="#{@link.url}"
+      | go to link now
+
+- if @link.image.present?
+  img src="#{@link.image}" style="margin:0;width:100%;"
+
+p
+  = @link.description
+
+hr
+
+- if @links.present?
+  h3 Other links from this sites
+  ul
+  - @links.each do |link|
+    li
+      a href="/#{link.url}"
+        = link.title
+
+javascript:
+  var seconds = 60;
+
+  function countdown() {
+      seconds = seconds - 1;
+      if (seconds < 0) {
+          // Chnage your redirection link here
+          window.location = "#{@link.url}";
+      } else {
+          // Update remaining seconds
+          document.getElementById("countdown").innerHTML = seconds;
+          // Count down using javascript
+          window.setTimeout("countdown()", 1000);
+      }
+    }
+
+    countdown();
