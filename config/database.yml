@@ -80,6 +80,4 @@ test:
 #
 production:
   <<: *default
-  database: giz_go_production
-  username: giz_go
-  password: <%= ENV['GIZ_GO_DATABASE_PASSWORD'] %>
+  url: <%= Rails.application.credentials.dig(:database_url).gsub('?', '_production?') %>
