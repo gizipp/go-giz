@@ -29,7 +29,7 @@ set :rbenv_ruby, '2.7.1'
 # set :keep_releases, 5
 
 ## Linked Files & Directories (Default None):
-# set :linked_files, %w{config/application.yml}
+set :linked_files, %w{config/master.key}
 
 namespace :puma do
   desc 'Create Directories for Puma Pids and Socket'
